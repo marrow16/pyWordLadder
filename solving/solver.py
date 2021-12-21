@@ -43,7 +43,7 @@ class Solver(object):
             self.start_word = self.puzzle.end_word
             self.end_word = self.puzzle.start_word
 
-        self.end_distances = WordDistanceMap(self.end_word)
+        self.end_distances = WordDistanceMap(self.end_word, self.maximum_ladder_length - 1)
         for linked_word in self.start_word.linked_words:
             if self.end_distances.reachable(linked_word, self.maximum_ladder_length):
                 self._solve(CandidateSolution(self.start_word, linked_word))
