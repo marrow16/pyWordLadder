@@ -14,7 +14,7 @@ class SolverTestCase(unittest.TestCase):
 
         solutions = solver.solve(4)
         self.assertEqual(4, len(solutions))
-        self.assertEqual(38, solver.explored_count)
+        self.assertEqual(10, solver.explored_count)
 
         mid_words: dict[str:int] = {}
         for solution in solutions:
@@ -38,12 +38,13 @@ class SolverTestCase(unittest.TestCase):
 
         solutions = solver.solve(5)
         self.assertEqual(7, len(solutions))
-        self.assertEqual(33, solver.explored_count)
+        self.assertEqual(21, solver.explored_count)
+        explored_count = solver.explored_count
         # now do it the other way around...
         solver = Solver(Puzzle(warm, cold))
         solutions = solver.solve(5)
         self.assertEqual(7, len(solutions))
-        self.assertEqual(33, solver.explored_count)
+        self.assertEqual(explored_count, solver.explored_count)
 
     def test_solve_kata_2_java(self):
         dictionary = Dictionary(4)
