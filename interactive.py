@@ -42,8 +42,6 @@ class Interactive(object):
             again = inp == "y" or inp == "Y"
             print()
 
-        print(green('interactive run'))
-
     def _process_input(self):
         inp = input('%s%s' % (PROMPT_PREFIX, STEPS[self.on_step]))
         ok = False
@@ -107,7 +105,7 @@ class Interactive(object):
         if self.maximum_ladder_length == -1:
             start = perf_counter()
             min_ladder = puzzle.calculate_minimum_ladder_length()
-            took = perf_counter() - start
+            took = (perf_counter() - start) * 1000
             if min_ladder is None:
                 print(red('Cannot solve \'%s\' to \'%s\' (took %.2fms to determine that)' % (self.start_word, self.end_word, took)))
                 return
@@ -116,11 +114,11 @@ class Interactive(object):
         solver = Solver(puzzle)
         start = perf_counter()
         solutions = solver.solve(self.maximum_ladder_length)
-        took = perf_counter() - start
+        took = (perf_counter() - start) * 1000
         if len(solutions) == 0:
             print(red('Took %.2fms to find no solutions (explored %d solutions)' % (took, solver.explored_count)))
             return
-        print('Took %s to find %s solutions (explored %s solutions'
+        print('Took %s to find %s solutions (explored %s solutions)'
               % (green('%.2fms' % took), green(len(solutions)), green(solver.explored_count)))
         self._display_solutions(solutions)
 
@@ -143,9 +141,9 @@ class Interactive(object):
                     if inp_int > 0:
                         limit = inp_int
                 except TypeError:
-                    return
+                    limit = 10
             for page_start in range(page_start, min(page_start + limit, length)):
-                print('%d/%d %s' % (page_start + 1, length, solutions[page_start]))
+                print('%d/%d %s' % (page_start + 1, length, green(solutions[page_start])))
 
 
 TERMINAL_COLOUR_RED = "\u001b[31m"
